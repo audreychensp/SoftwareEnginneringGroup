@@ -1,0 +1,32 @@
+
+/* This code runs to show a chat inbox feature. This is the teaching assistant's point of view. 
+Instead it could have been a module leader, or another student, however, we chose teaching assistant as an example. 
+The message sent from this compiler appears in the student's compiler and vice versa. */
+
+import java.net.*;
+import java.io.*;
+
+
+class TeachingAssistant{
+	public static void main(String[] args) {
+		try{
+			Socket s = new Socket("127.0.0.1", 1201);
+			DataInputStream din = new DataInputStream(s.getInputStream());
+			DataOutputStream dout = new DataOutputStream(s.getOutputStream());
+
+			BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+			String msgin="",msgout="";
+			while(!msgin.equals("end")){
+				msgout = br.readLine();
+				dout.writeUTF(msgout);
+				msgin = din.readUTF();
+				System.out.println("Student: " + msgin);
+			}
+
+		}catch(Exception e){
+
+		}
+		
+	}
+	
+} 
